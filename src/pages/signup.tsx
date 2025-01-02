@@ -7,6 +7,7 @@ import { cn } from "@/utils/cn";
 import {IconBrandGithub,IconBrandGoogle} from "@tabler/icons-react";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 export default function Signup() {
     
@@ -59,6 +60,7 @@ export default function Signup() {
 
           <div className="flex flex-col space-y-4">
             <button
+              onClick={()=>signIn("github")}
               className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
               type="submit"
             >
