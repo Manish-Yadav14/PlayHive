@@ -1,24 +1,42 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/cn";
+import axios from 'axios';
+import toast,{Toaster} from 'react-hot-toast'
 
 import {IconBrandGithub,IconBrandGoogle} from "@tabler/icons-react";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function Signup() {
+  const [name,setName] = useState("");
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
+  const router = useRouter();
     
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Form submitted");
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
+      const res = await axios.post('/api/auth/signup',{name,email,password});
+      console.log("Signup Success",res.data);
+      toast.success("Registration Successful !")
+      setTimeout(() => {
+        router.push('/');
+      }, 1000);
+    } catch (error:any) {
+      console.log("Signup failed!");
+      toast.error("Signup failed!");
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-6 pt-6 relative overflow-y-auto">
       <BackgroundBeams className="absolute top-0 left-0 w-full h-full z-0" />
+      <Toaster/> 
       <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black/[0.90] relative">
         <h2 className="font-bold text-2xl text-neutral-800 dark:text-neutral-200">
           Welcome to PlayHive
@@ -27,16 +45,25 @@ export default function Signup() {
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
             <LabelInputContainer>
               <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="Tyler" type="text" />
+              <Input 
+                value={name} 
+                onChange={(e)=>setName(e.target.value)} 
+                id="name" placeholder="Tyler" type="text" required />
             </LabelInputContainer>
           </div>
           <LabelInputContainer className="mb-4">
             <Label htmlFor="email">Email Address</Label>
-            <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+            <Input
+              value={email} 
+              onChange={(e)=>setEmail(e.target.value)}
+              id="email" placeholder="projectmayhem@fc.com" type="email" required />
           </LabelInputContainer>
           <LabelInputContainer className="mb-4">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" placeholder="••••••••" type="password" />
+            <Input
+              value={password} 
+              onChange={(e)=>setPassword(e.target.value)}
+              id="password" placeholder="••••••••" type="password" required />
           </LabelInputContainer>
 
           <button
@@ -84,7 +111,7 @@ export default function Signup() {
         </form>
       </div>
     </div>
-  );
+  )
 }
 
 const BottomGradient = () => {
@@ -93,8 +120,8 @@ const BottomGradient = () => {
       <span className="group-hover/btn:opacity-100 block transition duration-500 opacity-0 absolute h-px w-full -bottom-px inset-x-0 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
       <span className="group-hover/btn:opacity-100 blur-sm block transition duration-500 opacity-0 absolute h-px w-1/2 mx-auto -bottom-px inset-x-10 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
     </>
-  );
-};
+  )
+}
 
 const LabelInputContainer = ({
   children,

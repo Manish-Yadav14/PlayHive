@@ -1,6 +1,7 @@
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 import { useSession, signIn, signOut } from "next-auth/react"
+
 export default function Home() {
   const session = useSession();
   console.log(session);
