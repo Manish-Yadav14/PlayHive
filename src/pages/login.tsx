@@ -76,7 +76,7 @@ export default function Login() {
             </Link>
           </div>
           <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-6 h-[1px] w-full" />
-
+        </form>
           <div className="flex flex-col space-y-3">
             <button
               onClick={()=>signIn("github")}
@@ -100,7 +100,6 @@ export default function Login() {
               <BottomGradient />
             </button>
           </div>
-        </form>
       </div>
     </div>
   );

@@ -36,7 +36,9 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
             const token = jwt.sign(tokenData,process.env.TOKEN_SECRET!,{expiresIn:'1d'});
             res.setHeader('Set-Cookie',cookie.serialize('token',token,{
                 httpOnly: true,
+                secure: process.env.NODE_ENV === 'production', 
                 maxAge: 3600,
+                path:'/'
             }))
 
             return res.json({"message":"Logged In Success",success:true,token});

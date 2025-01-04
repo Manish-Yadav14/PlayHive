@@ -42,7 +42,9 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse){
             
             res.setHeader('Set-Cookie',cookie.serialize('token',token,{
                 httpOnly: true,
+                secure: process.env.NODE_ENV === 'production', 
                 maxAge: 3600,
+                path:'/'
             }))
 
             return res.json({message:"User Registered Successfully...",success:true,savedUser,token})
