@@ -20,7 +20,7 @@ function Card({game}:{game:Game}) {
                 <h2 className="card-title">{game.title}</h2>
                 <p>{game.statement}</p>
                 <div className="card-actions flex justify-start items-center">
-                    <button onClick={()=>router.push('/games/tictactoe')} className="btn btn-primary">Create a Game</button>
+                    <button className="btn btn-primary">Create a Game</button>
                     <button className="btn btn-outline bg-white">Join</button>
                 </div>
             </div>

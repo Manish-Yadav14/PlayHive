@@ -9,9 +9,7 @@ export function middleware(request: NextRequest) {
 
   const isPublicPath = path === '/login' || path === '/signup' || path === '/';
   const cookies = cookie.parse(request.cookies.toString() );
-  console.log(cookies);
   const token = cookies.token || "";
-  console.log("token",token);
 
   if(isPublicPath && token) {
     return NextResponse.redirect(new URL('/games', request.nextUrl))
